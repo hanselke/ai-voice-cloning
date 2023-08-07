@@ -8,6 +8,10 @@ ARG PYTHON_VERSION=3.9.13
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update
 RUN apt install -y curl wget git ffmpeg
+RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+RUN apt install git-lfs
+RUN git lfs install
+
 RUN adduser --disabled-password --gecos '' --shell /bin/bash user
 USER user
 ENV HOME=/home/user
@@ -20,7 +24,7 @@ ENV PATH="$HOME/miniconda/bin:$PATH"
 RUN conda init
 RUN conda install python=$PYTHON_VERSION
 RUN python3 -m pip install --upgrade pip
-RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu118
+RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu118 uvicorn
 
 RUN mkdir $HOME/ai-voice-cloning
 WORKDIR $HOME/ai-voice-cloning
@@ -32,6 +36,10 @@ RUN python3 -m pip install -r ./modules/dlas/requirements.txt
 RUN python3 -m pip install -e ./modules/dlas/
 ADD requirements.txt requirements.txt
 RUN python3 -m pip install -r ./requirements.txt
+
+# jupyter
+#RUN python3 -m pip install  install jupyter numba typing datasets>=2.6.1 git+https://github.com/huggingface/transformers@de9255de27abfcae4a1f816b904915f0b1e23cd9 git+https://github.com/huggingface/peft.git git+https://github.com/huggingface/accelerate.git gradio huggingface_hub librosa evaluate>=0.30 jiwer
 ADD --chown=user:user . $HOME/ai-voice-cloning
+
 
 CMD ["python", "./src/main.py", "--listen", "0.0.0.0:7680"]

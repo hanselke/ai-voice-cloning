@@ -2,7 +2,7 @@
 CMD="python3 ./src/main.py $@"
 # CMD="bash"
 CPATH="/home/user/ai-voice-cloning"
-docker run --rm --gpus all \
+PYTORCH_CUDA_ALLOC_CONF=backend:native docker run --rm --gpus all \
     --mount "type=bind,src=$PWD/models,dst=$CPATH/models" \
     --mount "type=bind,src=$PWD/training,dst=$CPATH/training" \
     --mount "type=bind,src=$PWD/voices,dst=$CPATH/voices" \

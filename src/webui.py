@@ -31,7 +31,7 @@ MERGER_SETTINGS = {}
 GENERATE_SETTINGS_ARGS = []
 
 PRESETS = {
-	'Ultra Fast': {'num_autoregressive_samples': 16, 'diffusion_iterations': 30, 'cond_free': False},
+	'Ultra Fast': {'num_autoregressive_samples': 2, 'diffusion_iterations': 2, 'cond_free': False},
 	'Fast': {'num_autoregressive_samples': 96, 'diffusion_iterations': 80},
 	'Standard': {'num_autoregressive_samples': 256, 'diffusion_iterations': 200},
 	'High Quality': {'num_autoregressive_samples': 256, 'diffusion_iterations': 400},
